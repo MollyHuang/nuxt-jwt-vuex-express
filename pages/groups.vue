@@ -25,6 +25,7 @@ export default {
     },
   },
   mounted(){
+    console.log('[groups.vue][mounted] document.cookie =', document.cookie)
     this.$nextTick(()=>{
       // this.$store.commit("token/clearToken");
       // this.clear();

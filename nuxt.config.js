@@ -40,6 +40,7 @@ export default {
 
 
   serverMiddleware: [
+    '~/serverMiddleware/access',
     '~/serverMiddleware/login',
   ],
 
