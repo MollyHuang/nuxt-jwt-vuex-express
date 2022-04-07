@@ -43,6 +43,7 @@ export default {
     }
   },
   mounted(){
+    console.log('[index.vue][mounted] document.cookie =', document.cookie)
     this.$nextTick(()=>{
       // this.$store.commit("token/clearToken");
       // this.clear();

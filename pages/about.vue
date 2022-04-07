@@ -1,27 +1,27 @@
 <template>
   <div>
-    <h1>Groups</h1>
+    <h1>About</h1>
     <div><button type="button" @click="logout">LOG OUT</button></div>
-    <h3><nuxt-link to="/about">About</nuxt-link></h3>
+    <h3><nuxt-link to="/groups">Groups</nuxt-link></h3>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'GroupsPage',
+  name: 'AboutPage',
   data() {
     return{
     }
   },
   methods: {
     async logout() {
-      console.log('[groups.vue][logout] ...')
+      console.log('[about.vue][logout] ...')
       await this.$store.dispatch('auth/logout')
         .then((resp) => {
-          console.log('[groups.vue][logout] resp =', resp)
+          console.log('[about.vue][logout] resp =', resp)
         })
         .catch((error) => {
-          console.error('[groups.vue][logout] error =', error)
+          console.error('[about.vue][logout] error =', error)
         })
         .finally(() => {
           window.location.href = "/"
@@ -29,11 +29,7 @@ export default {
     },
   },
   mounted(){
-    console.log('[groups.vue][mounted] document.cookie =', document.cookie)
-    this.$nextTick(()=>{
-      // this.$store.commit("token/clearToken");
-      // this.clear();
-    })
+    console.log('[about.vue][mounted] document.cookie =', document.cookie)
   }
 }
 </script>
