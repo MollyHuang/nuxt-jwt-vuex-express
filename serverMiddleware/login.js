@@ -38,8 +38,9 @@ app.post('/api/auth/login', async (req, res, next) => {
     }
 
     // Get token payload
-    const token = giveMeToken(user)
-    const payload = { access_token: token, refresh_token: token }
+    const access_token = giveMeToken(user, 5)
+    const refresh_token = giveMeToken(user, 60 * 24)
+    const payload = { access_token, refresh_token }
 
     res.status(200).json({ user, payload })  // 回傳200 user & token
   }
@@ -55,7 +56,7 @@ app.post('/api/auth/login', async (req, res, next) => {
 //   console.log('[serverMiddleware/login.js][/api/auth/logout] req.body =', req.body)
 // })
 
-function giveMeToken(user) {
+function giveMeToken(user, expMinutes) {
   // console.log('[serverMiddleware/login.js][giveMeToken] user =', user)
   // 產生 JWT - 使用 jsonwebtoken 套件
   // jsonwebtoken 產生token的寫法是sign，他會需要使用一組你自己定義的密碼去進行編碼，
@@ -100,7 +101,7 @@ function giveMeToken(user) {
     id: user.id,
     email: user.email,
     iat: ~~(new Date().getTime() / 1000), // now
-    exp: ~~(new Date(new Date().getTime() + 1000 * 60 * 60 * 24).getTime() / 1000),   // 1 天
+    exp: ~~(new Date(new Date().getTime() + 1000 * 60 * expMinutes).getTime() / 1000),   // expired
   };
 
   // STEP 3: 使用 jwt.sign 產生 Token
