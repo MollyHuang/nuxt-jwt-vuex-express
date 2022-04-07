@@ -50,3 +50,10 @@ export default {
   }
 }
 </script>
+
+<style lang="css">
+  .error {
+    color: brown;
+    padding: 1rem;
+  }
+</style>
