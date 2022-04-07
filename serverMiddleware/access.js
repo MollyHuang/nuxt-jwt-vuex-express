@@ -5,15 +5,7 @@ import bodyParser from 'body-parser'
 
 // Create express instance
 const app = express()
-const JWT_PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7xsqJX90hsFqfF56AGAB
-V7mK8m+YtTMidAI9YuTQf0MgTXTS10xgwBbqxROxV65+HYkrDPXfugRG8zSf5EOC
-Ie1WcxQDjfWSaInbOEs775+T51eV1JjAnPJVjfVhyM68B8L1HpYQ5Sh4nCd5z1m2
-m9IAvK35W3UK22NYKS0HiWwpYldd3+okv/dppHOUj7IcR64Xav9datkKUl4rKnY6
-m9nQRFDdOsY9xrHpeUNt9wt7NCsHLi4Qo3z+JSuZtx+ygO4IYrF7f6x1GkEwOw4N
-es6jTF8hj59W6o2eJyg5wFZWxjzbizlCm+U0pink5U7A9afARxZW8V/JYvxy4NtD
-IwIDAQAB
------END PUBLIC KEY-----`
+const JWT_SIGN_SECRET = `MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDJ6CX1hGEDhWe8`
 
 const authentication = (req, res, next) => {
   let token

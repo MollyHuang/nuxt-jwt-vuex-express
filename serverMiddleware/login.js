@@ -7,7 +7,7 @@ import bodyParser from 'body-parser'
 const app = express()
 
 app.post('/api/auth/login', bodyParser.json({ limit: '10240mb' }))
-app.post("/api/auth/login", async (req, res, next) => {
+app.post('/api/auth/login', async (req, res, next) => {
   console.log('[serverMiddleware/login.js][/api/auth/login] req.originalUrl =', req.originalUrl)
   console.log('[serverMiddleware/login.js][/api/auth/login] req.body =', req.body)
 
@@ -27,12 +27,12 @@ app.post("/api/auth/login", async (req, res, next) => {
 
     // check user info
     if (user.email_address !== email_address) {
-      res.status(404).json({ msg: "Email錯誤" })
+      res.status(404).json({ msg: "Email錯誤" })  // 回傳404錯誤
       console.log('[serverMiddleware/login.js][/api/auth/login] Email錯誤 =', email_address)
       return
     }
     else if (user.password !== password) {
-      res.status(403).json({ msg: "密碼錯誤" })
+      res.status(403).json({ msg: "密碼錯誤" })  // 回傳403錯誤
       console.log('[serverMiddleware/login.js][/api/auth/login] 密碼錯誤 =', password)
       return
     }
@@ -41,13 +41,19 @@ app.post("/api/auth/login", async (req, res, next) => {
     const token = giveMeToken(user)
     const payload = { access_token: token, refresh_token: token }
 
-    res.status(200).json({ user, payload })
+    res.status(200).json({ user, payload })  // 回傳200 user & token
   }
   catch (error) {
     console.log('[serverMiddleware/login.js][/api/auth/login] error =', error)
-    res.status(500).json({ msg: "err" })
+    res.status(500).json({ msg: "err" })  // 回傳500錯誤
   }
 })
+
+// app.post('/api/auth/logout', bodyParser.json({ limit: '10240mb' }))
+// app.post('/api/auth/logout', async (req, res, next) => {
+//   console.log('[serverMiddleware/login.js][/api/auth/logout] req.originalUrl =', req.originalUrl)
+//   console.log('[serverMiddleware/login.js][/api/auth/logout] req.body =', req.body)
+// })
 
 function giveMeToken(user) {
   // console.log('[serverMiddleware/login.js][giveMeToken] user =', user)
@@ -93,7 +99,7 @@ function giveMeToken(user) {
   let payload = {
     id: user.id,
     email: user.email,
-    iat: ~~(new Date().getTime() / 1000),
+    iat: ~~(new Date().getTime() / 1000), // now
     exp: ~~(new Date(new Date().getTime() + 1000 * 60 * 60 * 24).getTime() / 1000),   // 1 天
   };
 
@@ -105,6 +111,21 @@ function giveMeToken(user) {
 
   return jwtToken
 }
+
+// function checkToken() {
+//   let payload = {
+//     "status": "failed",
+//     "text_code": "TOKEN_EXPIRED",
+//     "message": "The JWT token is expired",
+//     "status_code": 401
+//   }
+
+//   if (expired) {
+//     res.status(401).json({ payload })  // 回傳401錯誤
+//     console.log('[serverMiddleware/login.js][checkToken] payload =', payload)
+//     return
+//   }
+// }
 
 export default {
   handler: app
