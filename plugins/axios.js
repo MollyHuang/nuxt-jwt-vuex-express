@@ -3,27 +3,30 @@
 // expose the store, axios client and redirect method from the Nuxt context
 // https://nuxtjs.org/api/context/
 export default function ({ store, app: { $axios }, redirect }) {
+
   console.log('[plugins/axios.js][begin] store.state =', store.state)
   // console.log('[plugins/axios.js][begin] $axios =', $axios)
-  console.log('[plugins/axios.js][begin] redirect =', redirect)
+  // console.log('[plugins/axios.js][begin] redirect =', redirect)
 
   const IGNORED_PATHS = ['/auth/login', '/auth/logout', '/auth/refresh']
 
   $axios.onRequest((config) => {
     // check if the user is authenticated
-    console.log('[plugins/axios.js][onRequest][begin] config =', config)
+    console.log('[plugins/axios.js][onRequest][begin] config.url =', config.method, config.url)
     // console.log('[plugins/axios.js][onRequest][begin] store.state.auth =', store.state.auth)
     if (store.state.auth.access_token) {
+      console.log('[plugins/axios.js][onRequest][begin] 有access_token並設置config.headers.Authorization')
       // set the Authorization header using the access token
       config.headers.Authorization = 'Bearer ' + store.state.auth.access_token
     }
-
     return config
   })
 
   $axios.onError((error) => {
-    // console.log('[plugins/axios.js][onError][begin] store.state =', store.state)
-    console.log('[plugins/axios.js][onError][begin] error =', error)
+    console.log('[plugins/axios.js][onError][begin] error.config.url =', error.config.url)
+    console.log('[plugins/axios.js][onError][begin] error.code =', error.code)
+    //console.log('[plugins/axios.js][onError][begin] error =', error)
+
     return new Promise(async (resolve, reject) => {
 
       // ignore certain paths (i.e. paths relating to authentication)
@@ -65,6 +68,7 @@ export default function ({ store, app: { $axios }, redirect }) {
             await store.dispatch('auth/logout')
 
             // redirect the user home
+            console.log('[plugins/axios.js][onError-end] 1 return redirect("/")')
             return redirect('/')
           }
           else {
@@ -78,12 +82,14 @@ export default function ({ store, app: { $axios }, redirect }) {
 
               // re-run the initial request using the new request config after a successful refresh
               // this response will be returned to the initial calling method
+              console.log('[plugins/axios.js][onError-end] return resolve($axios(config))')
               return resolve($axios(config))
             } catch (e) {
               // catch any error while refreshing the token
               await store.dispatch('auth/logout')
 
               // redirect the user home
+              console.log('[plugins/axios.js][onError-end] return redirect("/")')
               return redirect('/')
             }
           }
@@ -95,11 +101,14 @@ export default function ({ store, app: { $axios }, redirect }) {
           await store.dispatch('auth/logout')
 
           // redirect the user home
+          console.log('[plugins/axios.js][onError-end] 2 return redirect("/")')
           return redirect('/')
         }
       }
 
       // ignore all other errors, let component or other error handlers handle them
+
+      console.log('[plugins/axios.js][onError-end] return reject(error)')
       return reject(error)
     })
   })
