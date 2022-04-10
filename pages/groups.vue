@@ -54,15 +54,12 @@ export default {
     // console.log('[groups.vue][mounted] document.cookie =', document.cookie)
     console.log('[groups.vue][mounted] this.$store.getters["auth/isAuthenticated"] =', this.$store.getters["auth/isAuthenticated"])
     if (this.$store.getters["auth/isAuthenticated"]){
-      console.log('[groups.vue][mounted] this.$store.state.auth.id =', this.$store.state.auth.id)
-      console.log('[groups.vue][mounted] this.$store.state.auth.email_address =', this.$store.state.auth.email_address)
-      this.$nextTick(()=>{
-        this.$nuxt.$loading.start()
-        // this.isAuthenticated = this.$store.getters["auth/isAuthenticated"]
-        // this.email = this.@store.state.auth.email_address
-        // this.clear();
-      })
+      // console.log('[groups.vue][mounted] this.$store.state.auth.id =', this.$store.state.auth.id)
+      // console.log('[groups.vue][mounted] this.$store.state.auth.email_address =', this.$store.state.auth.email_address)
     }
+    this.$nextTick(()=>{
+      // this.$nuxt.$loading.start()
+    })
   }
 }
 </script>

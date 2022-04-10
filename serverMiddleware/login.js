@@ -50,12 +50,6 @@ app.post('/api/auth/login', async (req, res, next) => {
   }
 })
 
-// app.post('/api/auth/logout', bodyParser.json({ limit: '10240mb' }))
-// app.post('/api/auth/logout', async (req, res, next) => {
-//   console.log('[serverMiddleware/login.js][/api/auth/logout] req.originalUrl =', req.originalUrl)
-//   console.log('[serverMiddleware/login.js][/api/auth/logout] req.body =', req.body)
-// })
-
 function giveMeToken(user, expMinutes) {
   // console.log('[serverMiddleware/login.js][giveMeToken] user =', user)
   // 產生 JWT - 使用 jsonwebtoken 套件
@@ -112,21 +106,6 @@ function giveMeToken(user, expMinutes) {
 
   return jwtToken
 }
-
-// function checkToken() {
-//   let payload = {
-//     "status": "failed",
-//     "text_code": "TOKEN_EXPIRED",
-//     "message": "The JWT token is expired",
-//     "status_code": 401
-//   }
-
-//   if (expired) {
-//     res.status(401).json({ payload })  // 回傳401錯誤
-//     console.log('[serverMiddleware/login.js][checkToken] payload =', payload)
-//     return
-//   }
-// }
 
 export default {
   handler: app

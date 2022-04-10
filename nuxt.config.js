@@ -41,8 +41,9 @@ export default {
 
 
   serverMiddleware: [
-    '~/serverMiddleware/access',
     '~/serverMiddleware/login',
+    '~/serverMiddleware/check-token',
+    '~/serverMiddleware/access',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
