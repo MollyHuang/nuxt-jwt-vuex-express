@@ -5,6 +5,8 @@
       <nuxt-link to="/groups">Groups</nuxt-link>
       <nuxt-link to="/">Home</nuxt-link>
     </h3>
+    <hr />
+    <h3>isAuthenticated: {{isAuthenticated}}</h3>
     <div><button type="button" @click="logout">LOG OUT</button></div>
   </div>
 </template>
@@ -14,6 +16,7 @@ export default {
   name: 'AboutPage',
   data() {
     return{
+      isAuthenticated: this.$store.getters["auth/isAuthenticated"]
     }
   },
   methods: {
@@ -34,7 +37,13 @@ export default {
     },
   },
   mounted(){
-    console.log('[about.vue][mounted] document.cookie =', document.cookie)
+    // console.log('[about.vue][mounted] document.cookie =', document.cookie)
+    console.log('[about.vue][mounted] this.$store.getters["auth/isAuthenticated"] =', this.$store.getters["auth/isAuthenticated"])
+    if (!this.$store.getters["auth/isAuthenticated"]){
+      console.log('[about.vue][mounted] this.$store.state.auth.id =', this.$store.state.auth.id)
+      console.log('[about.vue][mounted] this.$store.state.auth.email_address =', this.$store.state.auth.email_address)
+      this.$router.push('/')
+    }
   }
 }
 </script>

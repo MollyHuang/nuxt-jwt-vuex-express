@@ -33,6 +33,7 @@ export default {
       await this.$store.dispatch('auth/login', { email_address, password })
         .then((resp) => {
           console.log('[index.vue][login] resp =', resp)
+          this.$router.push('/groups')
           //window.location.href = "/groups"
         })
         .catch((error) => {
