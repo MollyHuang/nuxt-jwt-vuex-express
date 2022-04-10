@@ -1,8 +1,11 @@
 <template>
   <div>
     <h1>Groups</h1>
+    <h3>
+      <nuxt-link to="/about">About</nuxt-link>
+      <nuxt-link to="/">Home</nuxt-link>
+    </h3>
     <div><button type="button" @click="logout">LOG OUT</button></div>
-    <h3><nuxt-link to="/about">About</nuxt-link></h3>
   </div>
 </template>
 
@@ -24,7 +27,9 @@ export default {
           console.error('[groups.vue][logout] error =', error)
         })
         .finally(() => {
+          // this.$router.push('/')
           window.location.href = "/"
+          console.log('[groups.vue][logout][finally] window.location.href = "/"')
         }) 
     },
   },

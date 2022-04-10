@@ -17,11 +17,11 @@ export const state = () => ({
 export const mutations = {
   // store the logged in user in the state
   [AUTH_MUTATIONS.SET_USER](state, { id, email_address }) {
-    // console.log('[store/auth.js][mutations][AUTH_MUTATIONS.SET_USER] id =', id)
-    // console.log('[store/auth.js][mutations][AUTH_MUTATIONS.SET_USER] email_address =', email_address)
+    console.log('[store/auth.js][mutations][AUTH_MUTATIONS.SET_USER] id =', id)
+    console.log('[store/auth.js][mutations][AUTH_MUTATIONS.SET_USER] email_address =', email_address)
     state.id = id
     state.email_address = email_address
-    console.log('[store/auth.js][mutations][AUTH_MUTATIONS.SET_USER] state =', state)
+    console.log('[store/auth.js][mutations][AUTH_MUTATIONS.SET_USER-end] state =', state)
   },
 
   // store new or updated token fields in the state
@@ -34,6 +34,7 @@ export const mutations = {
     if (refresh_token) {
       state.refresh_token = refresh_token
     }
+    console.log('[store/auth.js][mutations][AUTH_MUTATIONS.SET_PAYLOAD-end] state =', state)
   },
 
   // clear our the state, essentially logging out the user
@@ -42,12 +43,13 @@ export const mutations = {
     state.email_address = null
     state.access_token = null
     state.refresh_token = null
+    console.log('[store/auth.js][mutations][AUTH_MUTATIONS.LOGOUT-end] state =', state)
   },
 }
 
 export const actions = {
   async login({ commit, dispatch }, { email_address, password }) {
-    // console.log('[store/auth.js][actions][login] email_address =', email_address)
+    console.log('[store/auth.js][actions][login] email_address =', email_address)
     // console.log('[store/auth.js][actions][login] password =', password)
 
     // make an API call to login the user with an email address and password
@@ -61,8 +63,7 @@ export const actions = {
 
     // console.log('[store/auth.js][actions][login] response.data =', response.data)
     const { user, payload } = response.data
-    // console.log('[store/auth.js][actions][login] user =', user)
-    // console.log('[store/auth.js][actions][login] payload =', payload)
+    console.log('[store/auth.js][actions][login][$axios.post] { user, payload } =', { user, payload })
 
     // commit the user and tokens to the state
     commit(AUTH_MUTATIONS.SET_USER, user)
@@ -97,7 +98,9 @@ export const actions = {
 
   // logout the user
   logout({ commit, state }) {
+    console.log('[store/auth.js][actions][logout] state =', state)
     commit(AUTH_MUTATIONS.LOGOUT)
+    console.log('[store/auth.js][actions][logout-end] state =', state)
   },
 }
 

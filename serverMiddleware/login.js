@@ -38,8 +38,8 @@ app.post('/api/auth/login', async (req, res, next) => {
     }
 
     // Get token payload
-    const access_token = giveMeToken(user, 5)
-    const refresh_token = giveMeToken(user, 60 * 24)
+    const access_token = giveMeToken(user, 1)   // access_token: 1分鐘就過期
+    const refresh_token = giveMeToken(user, 5)  // refresh_token: 5分鐘就過期
     const payload = { access_token, refresh_token }
 
     res.status(200).json({ user, payload })  // 回傳200 user & token
